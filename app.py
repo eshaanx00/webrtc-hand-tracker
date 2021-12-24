@@ -15,15 +15,15 @@ def drawHands(img):
                         mpDraw.draw_landmarks(img,handLms,mpHands.HAND_CONNECTIONS)
         return img
 
-
-class VideoTransformer(VideoTransformerBase):
-    def transform(self, frame):
-        img = frame.to_ndarray(format="bgr24")
-
-        img = drawHands(img=img)
-        
-
-        return img
+def main():
+    class VideoTransformer(VideoTransformerBase):
+        def transform(self, frame):
+            img = frame.to_ndarray(format="bgr24")
+            img = drawHands(img=img)
+            return img
 
 
-webrtc_streamer(key="example", video_transformer_factory=VideoTransformer,media_stream_constraints={"video": True, "audio": False})
+    ctx = webrtc_streamer(key="Video", video_transformer_factory=VideoTransformer,media_stream_constraints={"video": True, "audio": False})
+
+if __name__ == "__main__":
+    main()
